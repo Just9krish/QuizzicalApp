@@ -22,9 +22,10 @@ function App() {
 
   function newQuiz(listOfQuizs) {
     return listOfQuizs.map(quiz => ({
+      id: nanoid(),
       question: quiz.question,
       correctAnswer: quiz.correct_answer,
-      // options: settingOptions(shuffleArray([...quiz.incorrect_answers, quiz.correct_answer]))
+      options: settingOptions(shuffleArray([...quiz.incorrect_answers, quiz.correct_answer]))
     }))
   }
 
@@ -37,29 +38,26 @@ function App() {
   }
 
   function settingOptions(listOfOptions) {
-    return listOfOptions.map(option => ({
-      id: nanoid(),
+    return (listOfOptions.map(option => {
+      return {
+        id: nanoid(),
+        value: option
+      }
     }))
   }
+
+  // console.log(allQuiz)
 
   const quizElements = allQuiz.map(quiz => (
     <Quiz
       question={quiz.question}
       key={quiz.id}
       id={quiz.id}
+      options={quiz.options}
     />
   ))
 
   return (
-    // <main>
-    //   {
-    //     !isStart ?
-    //       <Start
-    //         startGame={startGame}
-    //       /> :
-    //       { quizElements }
-    //   }
-    // </main>
     <main>
       {!isStart ?
         <Start
