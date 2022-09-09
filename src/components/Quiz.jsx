@@ -1,9 +1,5 @@
 export default function Quiz(props) {
-
-    // console.log(props.options)
-
-    // const optionBgcolor = props.isHeld ? "bg-clr-choose" : "white"
-
+    
     const optionElements = props.options.map(option => {
         return <button className={`
         border 
