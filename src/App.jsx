@@ -47,7 +47,7 @@ function App() {
     }))
   }
 
-  // console.log(allQuiz)
+  console.log(allQuiz)
 
   const quizElements = allQuiz.map(quiz => (
     <Quiz
@@ -63,10 +63,7 @@ function App() {
     setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
       return quiz.options.map(option => {
         if (option.id === optionId) {
-          return ({
-            ...option,
-            isHeld: !option.isHeld
-          })
+          return true
         }
       })
     }))
