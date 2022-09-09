@@ -42,12 +42,12 @@ function App() {
       return {
         id: nanoid(),
         value: option,
-        isheld: false
+        isHeld: false
       }
     }))
   }
 
-  console.log(allQuiz)
+  // console.log(allQuiz)
 
   const quizElements = allQuiz.map(quiz => (
     <Quiz
@@ -61,10 +61,14 @@ function App() {
 
   function chooseOption(quizId, optionId) {
     setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
-      return quiz.options.map(option => {
-        if (option.id === optionId) {
-          return true
-        }
+      const optionList = quiz.options.map(option => {
+        return option.id === optionId ?
+          { ...option, isHeld: !option.isHeld } :
+          option
+      })
+      return ({
+        ...quiz,
+        options: optionList
       })
     }))
   }

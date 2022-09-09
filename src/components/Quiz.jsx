@@ -2,10 +2,10 @@ export default function Quiz(props) {
 
     // console.log(props.options)
 
-// const optionBgcolor = props.isHeld ? "bg-clr-choose" : "white"
+    // const optionBgcolor = props.isHeld ? "bg-clr-choose" : "white"
 
-    const optionElements = props.options.map(option => (
-        <button className="
+    const optionElements = props.options.map(option => {
+        return <button className={`
         border 
         border-clr-blue-btn 
         rounded-md 
@@ -15,12 +15,13 @@ export default function Quiz(props) {
         hover:bg-clr-choose 
         hover:border 
         hover:border-clr-choose
-        "
+        ${option.isHeld ? 'bg-clr-choose border-clr-choose' : 'white'}
+        `}
             key={option.id}
             onClick={() => props.chooseOption(props.id, option.id)}
         >{option.value}
         </button>
-    ))
+    })
 
     return (
 
