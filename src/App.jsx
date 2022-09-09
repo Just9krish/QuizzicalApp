@@ -41,7 +41,8 @@ function App() {
     return (listOfOptions.map(option => {
       return {
         id: nanoid(),
-        value: option
+        value: option,
+        isheld: false
       }
     }))
   }
@@ -54,8 +55,22 @@ function App() {
       key={quiz.id}
       id={quiz.id}
       options={quiz.options}
+      chooseOption={chooseOption}
     />
   ))
+
+  function chooseOption(quizId, optionId) {
+    setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
+      return quiz.options.map(option => {
+        if (option.id === optionId) {
+          return ({
+            ...option,
+            isHeld: !option.isHeld
+          })
+        }
+      })
+    }))
+  }
 
   return (
     <main>

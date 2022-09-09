@@ -1,6 +1,9 @@
 export default function Quiz(props) {
 
     // console.log(props.options)
+
+// const optionBgcolor = props.isHeld ? "bg-clr-choose" : "white"
+
     const optionElements = props.options.map(option => (
         <button className="
         border 
@@ -8,12 +11,13 @@ export default function Quiz(props) {
         rounded-md 
         py-1 px-6 
         font-inter 
-        font-medium 
+        font-medium
         hover:bg-clr-choose 
         hover:border 
         hover:border-clr-choose
         "
-        key={option.id}
+            key={option.id}
+            onClick={() => props.chooseOption(props.id, option.id)}
         >{option.value}
         </button>
     ))
