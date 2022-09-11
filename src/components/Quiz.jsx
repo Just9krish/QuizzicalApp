@@ -2,7 +2,7 @@ export default function Quiz(props) {
 
     const optionElements = props.options.map(option => {
 
-        let background = {}
+        let background = ''
         if (option.isHeldCorrect) {
             background = 'bg-clr-right-answer border-clr-right-answer'
         } else if (option.isHeldIncorrect) {
