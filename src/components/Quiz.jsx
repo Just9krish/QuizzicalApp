@@ -1,6 +1,16 @@
 export default function Quiz(props) {
-    
+
     const optionElements = props.options.map(option => {
+
+        let background = {}
+        if (option.isHeldCorrect) {
+            background = 'bg-clr-right-answer border-clr-right-answer'
+        } else if (option.isHeldIncorrect) {
+            background = 'bg-clr-wrong-answer border-clr-wrong-answer'
+        } else {
+            background = option.isHeld ? 'bg-clr-choose border-clr-choose' : 'white'
+        }
+
         return <button className={`
         border 
         border-clr-blue-btn 
@@ -11,7 +21,7 @@ export default function Quiz(props) {
         hover:bg-clr-choose 
         hover:border 
         hover:border-clr-choose
-        ${option.isHeld ? 'bg-clr-choose border-clr-choose' : 'white'}
+        ${background}
         `}
             key={option.id}
             onClick={() => props.chooseOption(props.id, option.id)}
@@ -20,14 +30,12 @@ export default function Quiz(props) {
     })
 
     return (
-
         <div className="text-clr-blue-text space-y-5">
             <p className="text-lg font-karla font-bold">{props.question}</p>
             <div className="flex flex-wrap gap-5">
                 {optionElements}
             </div>
-            <hr className="bg-slate-500"></hr>
+            <hr className="bg-clr-white"></hr>
         </div>
-
     )
 }

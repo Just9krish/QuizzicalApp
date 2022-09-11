@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { nanoid } from 'nanoid'
-import './App.css'
 import Start from './components/Start'
 import Quiz from './components/Quiz'
 
@@ -18,14 +17,14 @@ function App() {
     fetch("https://opentdb.com/api.php?amount=5&category=18&type=multiple")
       .then(response => response.json())
       .then(data => setAllQuiz(newQuiz(data.results)))
-  }, [0])
+  }, [])
 
   function newQuiz(listOfQuizs) {
     return listOfQuizs.map(quiz => ({
       id: nanoid(),
       question: quiz.question,
       correctAnswer: quiz.correct_answer,
-      options: settingOptions(shuffleArray([...quiz.incorrect_answers, quiz.correct_answer]))
+      options: settingOptions(shuffleArray([...quiz.incorrect_answers, quiz.correct_answer]), quiz.correct_answer)
     }))
   }
 
@@ -37,12 +36,58 @@ function App() {
     return arr;
   }
 
-  function settingOptions(listOfOptions) {
+  function settingOptions(listOfOptions, correctAnswer) {
+    // console.log(correctAnswer)
     return (listOfOptions.map(option => {
       return {
         id: nanoid(),
         value: option,
-        isHeld: false
+        isHeld: false,
+        isCorrect: option === correctAnswer ? true : false,
+        isHeldCorrect: false,
+        isHeldIncorrect: false
+      }
+    }))
+  }
+
+  function chooseOption(quizId, optionId) {
+    setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
+      const optionList = quiz.options.map(option => {
+        return option.id === optionId ?
+          { ...option, isHeld: !option.isHeld } :
+          option
+      })
+      return ({
+        ...quiz,
+        options: optionList
+      })
+    }))
+  }
+
+  function checkAnswers() {
+    setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
+      const checkedAnswers = quiz.options.map(option => {
+        if (option.isHeld && option.isCorrect) {
+          // console.log('wrong')
+          return {
+            ...option,
+            isHeldCorrect: true
+          }
+        } else if (option.isHeld && !option.isCorrect) {
+          // console.log('right')
+          return {
+            ...option,
+            isHeldIncorrect: true
+          }
+        } else {
+          return {
+            ...option
+          }
+        }
+      })
+      return {
+        ...quiz,
+        options: checkedAnswers
       }
     }))
   }
@@ -59,19 +104,6 @@ function App() {
     />
   ))
 
-  function chooseOption(quizId, optionId) {
-    setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
-      const optionList = quiz.options.map(option => {
-        return option.id === optionId ?
-          { ...option, isHeld: !option.isHeld } :
-          option
-      })
-      return ({
-        ...quiz,
-        options: optionList
-      })
-    }))
-  }
 
   return (
     <main>
@@ -82,10 +114,7 @@ function App() {
         <div className="space-y-5 max-w-5xl mx-auto my-11 p-5">
           {quizElements}
           <div className="flex justify-center items-center">
-            <p className="font-bold text-lg text-clr-blue-text mr-4">You scored 4/5 correct answers</p>
-            <button
-              onClick={startGame}
-              className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Check answers</button>
+            <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Check Answers</button>
           </div>
         </div>
       }
