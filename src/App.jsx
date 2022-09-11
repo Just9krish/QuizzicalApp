@@ -92,7 +92,7 @@ function App() {
     }))
   }
 
-  // console.log(allQuiz)
+  console.log(allQuiz)
 
   const quizElements = allQuiz.map(quiz => (
     <Quiz
