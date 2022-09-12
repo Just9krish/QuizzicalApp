@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { nanoid } from 'nanoid'
 import Start from './components/Start'
 import Quiz from './components/Quiz'
+import yellowBlob from './assets/yellow-blob.svg'
+import blueBlob from './assets/blue-blob.svg'
 
 
 function App() {
@@ -9,6 +11,7 @@ function App() {
   const [allQuiz, setAllQuiz] = useState([])
   const [isPlayAgain, setIsPlayAgain] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
+  const [score, setScore] = useState(0)
 
 
   function startGame() {
@@ -18,6 +21,7 @@ function App() {
   function newGame() {
     setIsPlayAgain(prevValue => !prevValue)
     setIsChecked(false)
+    setScore(0)
   }
 
   useEffect(() => {
@@ -64,10 +68,10 @@ function App() {
           { ...option, isHeld: !option.isHeld } :
           option
       })
-      return ({
+      return {
         ...quiz,
         options: optionList
-      })
+      }
     }))
   }
 
@@ -75,13 +79,12 @@ function App() {
     setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
       const checkedAnswers = quiz.options.map(option => {
         if (option.isHeld && option.isCorrect) {
-          // console.log('wrong')
+          setScore(prevScore => prevScore + 1)
           return {
             ...option,
             isHeldCorrect: true
           }
         } else if (option.isHeld && !option.isCorrect) {
-          // console.log('right')
           return {
             ...option,
             isHeldIncorrect: true
@@ -114,25 +117,30 @@ function App() {
 
 
   return (
-    <main>
-      {!isStart ?
-        <Start
-          startGame={startGame}
-        /> :
-        <div className="space-y-5 max-w-5xl mx-auto my-11 p-5">
-          {quizElements}
-          {
-            isChecked ?
-              <div className="flex justify-center items-center">
-                <p className="text-clr-blue-text text-lg mr-8 font-inter font-bold">You scored 4/5 correct answers.</p>
-                <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-8 py-2 rounded-lg font-semibold font-inter hover:bg-blue-700">Play Again?</button>
-              </div>
-              :
-              <div className="flex justify-center items-center">
-                <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-8 py-2 rounded-lg font-semibold font-inter hover:bg-blue-700">Check Answers</button>
-              </div>
-          }
-        </div>
+    <main className='relative overflow-hidden'>
+
+      <img src={yellowBlob} className="absolute top-0 right-0 -rotate-12 translate-x-1/2 -translate-y-1/3 scale-125 pointer-events-none sm:scale-90" />
+      <img src={blueBlob} className="absolute bottom-0 left-0 -translate-x-1/3 translate-y-1/2 scale-125 pointer-events-none sm:scale-90" />
+
+      {
+        !isStart ?
+          <Start
+            startGame={startGame}
+          /> :
+          <div className="space-y-5 max-w-5xl mx-auto my-11 p-5 relative z-10">
+            {quizElements}
+            {
+              !isChecked ?
+                <div className="flex items-center justify-center ">
+                  <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Check Answers</button>
+                </div>
+                :
+                <div className="text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
+                  <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score}/5 correct answers.</p>
+                  <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again?</button>
+                </div>
+            }
+          </div>
       }
     </main>
   )
