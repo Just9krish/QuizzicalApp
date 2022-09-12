@@ -7,17 +7,24 @@ import Quiz from './components/Quiz'
 function App() {
   const [isStart, setIsStart] = useState(false)
   const [allQuiz, setAllQuiz] = useState([])
+  const [isPlayAgain, setIsPlayAgain] = useState(false)
+  const [isChecked, setIsChecked] = useState(false)
 
 
   function startGame() {
     setIsStart(prevValue => !prevValue)
   }
 
+  function newGame() {
+    setIsPlayAgain(prevValue => !prevValue)
+    setIsChecked(false)
+  }
+
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5&category=18&type=multiple")
       .then(response => response.json())
       .then(data => setAllQuiz(newQuiz(data.results)))
-  }, [])
+  }, [isPlayAgain])
 
   function newQuiz(listOfQuizs) {
     return listOfQuizs.map(quiz => ({
@@ -90,9 +97,10 @@ function App() {
         options: checkedAnswers
       }
     }))
+    setIsChecked(true)
   }
 
-  console.log(allQuiz)
+  // console.log(allQuiz)
 
   const quizElements = allQuiz.map(quiz => (
     <Quiz
@@ -113,9 +121,17 @@ function App() {
         /> :
         <div className="space-y-5 max-w-5xl mx-auto my-11 p-5">
           {quizElements}
-          <div className="flex justify-center items-center">
-            <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Check Answers</button>
-          </div>
+          {
+            isChecked ?
+              <div className="flex justify-center items-center">
+                <p className="text-clr-blue-text text-lg mr-8 font-inter font-bold">You scored 4/5 correct answers.</p>
+                <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-8 py-2 rounded-lg font-semibold font-inter hover:bg-blue-700">Play Again?</button>
+              </div>
+              :
+              <div className="flex justify-center items-center">
+                <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-8 py-2 rounded-lg font-semibold font-inter hover:bg-blue-700">Check Answers</button>
+              </div>
+          }
         </div>
       }
     </main>
