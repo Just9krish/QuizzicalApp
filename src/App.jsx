@@ -10,7 +10,7 @@ function App() {
   const [isStart, setIsStart] = useState(false)
   const [allQuiz, setAllQuiz] = useState([])
   const [isPlayAgain, setIsPlayAgain] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
+  const [isAllSelect, setIsAllSelect] = useState(false)
   const [score, setScore] = useState(0)
 
 
@@ -20,7 +20,7 @@ function App() {
 
   function newGame() {
     setIsPlayAgain(prevValue => !prevValue)
-    setIsChecked(false)
+    setIsAllSelect(false)
     setScore(0)
   }
 
@@ -55,7 +55,8 @@ function App() {
         isHeld: false,
         isCorrect: option === correctAnswer ? true : false,
         isHeldCorrect: false,
-        isHeldIncorrect: false
+        isHeldIncorrect: false,
+        isChecked: false
       }
     }))
   }
@@ -85,16 +86,19 @@ function App() {
           setScore(prevScore => prevScore + 1)
           return {
             ...option,
-            isHeldCorrect: true
+            isHeldCorrect: true,
+            isChecked: true
           }
         } else if (option.isHeld && !option.isCorrect) {
           return {
             ...option,
-            isHeldIncorrect: true
+            isHeldIncorrect: true,
+            isChecked: true
           }
         } else {
           return {
-            ...option
+            ...option,
+            isChecked: true
           }
         }
       })
@@ -103,7 +107,7 @@ function App() {
         options: checkedAnswers
       }
     }))
-    setIsChecked(true)
+    setIsAllSelect(true)
   }
 
   const quizElements = allQuiz.map(quiz => (
@@ -131,7 +135,7 @@ function App() {
           <div className="space-y-5 max-w-5xl mx-auto my-11 p-5 relative z-10">
             {quizElements}
             {
-              !isChecked ?
+              !isAllSelect ?
                 <div className="flex items-center justify-center ">
                   <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Check Answers</button>
                 </div>

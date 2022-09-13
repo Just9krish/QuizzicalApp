@@ -3,10 +3,10 @@ export default function Quiz(props) {
     const optionElements = props.options.map(option => {
 
         let background = ""
-        if (option.isHeldCorrect) {
+        if (option.isHeldCorrect && option.isChecked) {
             background = 'border-clr-right-answer bg-clr-right-answer'
-        } else if (option.isHeldIncorrect) {
-            background = 'border-clr-wrong-answer bg-clr-wrong-answer'
+        } else if (option.isHeldIncorrect && option.isChecked) {
+            background = 'border-clr-wrong-answer bg-clr-wrong-answer opacity-80 cursor-not-allowed'
         } else {
             background = option.isHeld ? 'border-clr-choose bg-clr-choose' : 'border-clr-blue-btn'
         }
