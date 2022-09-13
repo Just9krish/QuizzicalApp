@@ -1,6 +1,6 @@
 export default function Start(props) {
     return (
-        <div className="flex justify-center items-center h-screen flex-col gap-4 bg-clr-white p-5 text-center">
+        <div className="flex justify-center items-center h-screen flex-col gap-4 p-5 text-center">
             <h1 className="text-clr-blue-text font-bold text-3xl font-karla md:text-6xl">Quizzical</h1>
             <p className="text-clr-blue-text font-inter md:text-xl">Click on the start button to test your knowledge!</p>
             <button

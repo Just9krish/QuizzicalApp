@@ -63,14 +63,18 @@ function App() {
 
   function chooseOption(quizId, optionId) {
     setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
-      const optionList = quiz.options.map(option => {
-        return option.id === optionId ?
-          { ...option, isHeld: !option.isHeld } :
-          option
-      })
-      return {
-        ...quiz,
-        options: optionList
+      if (quiz.id === quizId) {
+        const optionList = quiz.options.map(option => {
+          return option.id === optionId || option.isHeld ?
+            { ...option, isHeld: !option.isHeld } :
+            option
+        })
+        return {
+          ...quiz,
+          options: optionList
+        }
+      } else {
+        return quiz
       }
     }))
   }
@@ -79,7 +83,7 @@ function App() {
     setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
       const checkedAnswers = quiz.options.map(option => {
         if (option.isHeld && option.isCorrect) {
-          setScore(prevScore => prevScore + 1)
+          // setScore(prevScore => prevScore + 1)
           return {
             ...option,
             isHeldCorrect: true
@@ -103,7 +107,7 @@ function App() {
     setIsChecked(true)
   }
 
-  // console.log(allQuiz)
+  console.log(allQuiz)
 
   const quizElements = allQuiz.map(quiz => (
     <Quiz
@@ -117,7 +121,7 @@ function App() {
 
 
   return (
-    <main className='relative overflow-hidden'>
+    <main className='relative overflow-hidden '>
 
       <img src={yellowBlob} className="absolute top-0 right-0 -rotate-12 translate-x-1/2 -translate-y-1/3 scale-125 pointer-events-none sm:scale-90" />
       <img src={blueBlob} className="absolute bottom-0 left-0 -translate-x-1/3 translate-y-1/2 scale-125 pointer-events-none sm:scale-90" />
