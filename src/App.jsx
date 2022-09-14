@@ -20,7 +20,7 @@ function App() {
 
   function newGame() {
     setIsPlayAgain(prevValue => !prevValue)
-    setIsAllSelect(false)
+    setIsAllSelect(prevValue => !prevValue)
     setScore(0)
   }
 
@@ -84,22 +84,29 @@ function App() {
       const checkedAnswers = quiz.options.map(option => {
         if (option.isHeld && option.isCorrect) {
           setScore(prevScore => prevScore + 1)
-          return {
+          return ({
             ...option,
-            isHeldCorrect: true,
-            isChecked: true
-          }
+            isHeldCorrect: true
+          })
         } else if (option.isHeld && !option.isCorrect) {
-          return {
+          return ({
             ...option,
-            isHeldIncorrect: true,
-            isChecked: true
-          }
+            isHeldIncorrect: true
+          })
+        } else if (!option.isHeld && option.isCorrect) {
+          return ({
+            ...option,
+            isNotSelectedCorrect: true
+          })
+        } else if (!option.isHeld && !option.isCorrect) {
+          return ({
+            ...option,
+            isNotSelectedIncorrect: true
+          })
         } else {
-          return {
-            ...option,
-            isChecked: true
-          }
+          return ({
+            ...option
+          })
         }
       })
       return {
@@ -107,7 +114,7 @@ function App() {
         options: checkedAnswers
       }
     }))
-    setIsAllSelect(true)
+    setIsAllSelect(prevValue => !prevValue)
   }
 
   const quizElements = allQuiz.map(quiz => (
@@ -117,6 +124,7 @@ function App() {
       id={quiz.id}
       options={quiz.options}
       chooseOption={chooseOption}
+      disable={isAllSelect}
     />
   ))
 
@@ -133,6 +141,7 @@ function App() {
             startGame={startGame}
           /> :
           <div className="space-y-5 max-w-5xl mx-auto my-11 p-5 relative z-10">
+            <button onClick={startGame} className="text-sm text-clr-white bg-clr-blue-btn font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg">Back</button>
             {quizElements}
             {
               !isAllSelect ?
@@ -142,7 +151,7 @@ function App() {
                 :
                 <div className="text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
                   <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score / 2}/5 correct {score / 2 > 1 ? 'answers' : 'answer'}.</p>
-                  <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again?</button>
+                  <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again</button>
                 </div>
             }
           </div>
