@@ -150,7 +150,7 @@ function App() {
                 </div>
                 :
                 <div className="text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
-                  <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score / 2}/5 correct {score / 2 > 1 ? 'answers' : 'answer'}.</p>
+                  <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score}/5 correct {score / 2 > 1 ? 'answers' : 'answer'}.</p>
                   <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again</button>
                 </div>
             }
