@@ -95,7 +95,6 @@ function App() {
   // console.log(answerIndex)
 
   function chooseOption(quizId, optionId) {
-    abc(quizId)
     setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
       if (quiz.id === quizId) {
         const optionList = quiz.options.map(option => {
