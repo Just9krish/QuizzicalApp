@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid'
 import Start from './components/Start'
 import Quiz from './components/Quiz'
 import QuizForm from './components/QuizForm'
+import Spinner from './components/Spinner'
 import yellowBlob from './assets/yellow-blob.svg'
 import blueBlob from './assets/blue-blob.svg'
 
@@ -10,6 +11,7 @@ import blueBlob from './assets/blue-blob.svg'
 function App() {
   const [isStart, setIsStart] = useState(false)
   const [isFormFilled, setIsFormFilled] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [BASE_URL, setBASE_URL] = useState()
   const [allQuiz, setAllQuiz] = useState([])
   const [isPlayAgain, setIsPlayAgain] = useState(false)
@@ -33,10 +35,16 @@ function App() {
   }
 
   useEffect(() => {
-    fetch(BASE_URL)
-      .then(response =>
-        response.json())
-      .then(data => setAllQuiz(newQuiz(data.results)))
+    const getItems = async () => {
+      setIsLoading(true)
+      await fetch(BASE_URL)
+        .then(response =>
+          response.json())
+        .then(data => setAllQuiz(newQuiz(data.results)))
+      setIsLoading(false)
+    }
+
+    getItems()
   }, [isPlayAgain, isFormFilled])
 
   function newQuiz(listOfQuizs) {
@@ -151,21 +159,22 @@ function App() {
           /> :
           !isFormFilled ?
             <QuizForm formFunction={formFunction} startGame={startGame} /> :
-            <div className="space-y-5 max-w-5xl mx-auto my-11 p-5 relative z-10">
-              <button onClick={formFunction} className="text-sm text-clr-white bg-clr-blue-btn font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg">Back</button>
-              {quizElements}
-              {
-                !isAllSelect ?
-                  <div className="flex items-center justify-center ">
-                    <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Check Answers</button>
-                  </div>
-                  :
-                  <div className="text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
-                    <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score}/5 correct {score / 2 > 1 ? 'answers' : 'answer'}.</p>
-                    <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again</button>
-                  </div>
-              }
-            </div>
+            isLoading ? <Spinner /> :
+              <div className="space-y-5 max-w-5xl mx-auto my-11 p-5 relative z-10">
+                <button onClick={formFunction} className="text-sm text-clr-white bg-clr-blue-btn font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg">Back</button>
+                {quizElements}
+                {
+                  !isAllSelect ?
+                    <div className="flex items-center justify-center ">
+                      <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Check Answers</button>
+                    </div>
+                    :
+                    <div className="text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
+                      <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score}/5 correct {score / 2 > 1 ? 'answers' : 'answer'}.</p>
+                      <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again</button>
+                    </div>
+                }
+              </div>
       }
     </main>
   )
