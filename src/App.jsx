@@ -26,6 +26,7 @@ function App() {
   function formFunction(url) {
     setBASE_URL(url)
     setIsFormFilled(prev => !prev)
+    setIsAllSelect(false)
   }
 
   function newGame() {
