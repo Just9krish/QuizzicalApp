@@ -8,9 +8,9 @@ export default function Quiz(props) {
         if (option.isHeldCorrect) {
             background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer'
         } else if (option.isHeldIncorrect) {
-            background = `disabled:border-clr-wrong-answer disabled:bg-clr-wrong-answer opacity-80 cursor-not-allowed`
+            background = 'disabled:border-clr-wrong-answer disabled:bg-clr-wrong-answer opacity-80 cursor-not-allowed'
         } else if (option.isNotSelectedCorrect) {
-            background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer '
+            background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer'
         } else if (option.isNotSelectedIncorrect) {
             background = `cursor-not-allowed disabled:bg-white opacity-80`
         } else {
@@ -53,3 +53,15 @@ export default function Quiz(props) {
         </div>
     )
 }
+
+// function selectAllOptions(questionId) {
+  //   data.map(allElements => {
+  //     if (questionId === allElements.id) {
+  //       allElements.options.map(option => {
+  //         if (option.isHeld) {
+  //           setCount(pre => pre + 1)
+  //         }
+  //       })
+  //     }
+  //   })
+  // }

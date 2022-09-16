@@ -17,6 +17,7 @@ function App() {
   const [isPlayAgain, setIsPlayAgain] = useState(false)
   const [isAllSelect, setIsAllSelect] = useState(false)
   const [score, setScore] = useState(0)
+  // const [answerIndex, setAnswerIndex] = useState(0)
 
 
   function startGame() {
@@ -79,7 +80,22 @@ function App() {
     }))
   }
 
+  // function abc(questionID) {
+
+  //   allQuiz.map(quiz => {
+  //     if (questionID === quiz.id) {
+  //       quiz.options.map(option => {
+  //         if (option.isHeld) {
+  //           setAnswerIndex(pre => pre + 1)
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
+  // console.log(answerIndex)
+
   function chooseOption(quizId, optionId) {
+    abc(quizId)
     setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
       if (quiz.id === quizId) {
         const optionList = quiz.options.map(option => {
@@ -171,7 +187,7 @@ function App() {
                     </div>
                     :
                     <div className="text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
-                      <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score}/{allQuiz.length} correct {score / 2 > 1 ? 'answers' : 'answer'}.</p>
+                      <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score}/{allQuiz.length} correct {score > 1 ? 'answers' : 'answer'}.</p>
                       <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again</button>
                     </div>
                 }
