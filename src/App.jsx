@@ -12,12 +12,12 @@ function App() {
   const [isStart, setIsStart] = useState(false)
   const [isFormFilled, setIsFormFilled] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [BASE_URL, setBASE_URL] = useState()
+  const [BASE_URL, setBASE_URL] = useState("https://opentdb.com/api.php?amount=5")
   const [allQuiz, setAllQuiz] = useState([])
   const [isPlayAgain, setIsPlayAgain] = useState(false)
   const [isAllSelect, setIsAllSelect] = useState(false)
   const [score, setScore] = useState(0)
-  // const [answerIndex, setAnswerIndex] = useState(0)
+  const [answerIndex, setAnswerIndex] = useState(0)
 
 
   function startGame() {
@@ -34,6 +34,7 @@ function App() {
     setIsPlayAgain(prevValue => !prevValue)
     setIsAllSelect(prevValue => !prevValue)
     setScore(0)
+    setAnswerIndex(0)
   }
 
   useEffect(() => {
@@ -80,21 +81,9 @@ function App() {
     }))
   }
 
-  // function abc(questionID) {
-
-  //   allQuiz.map(quiz => {
-  //     if (questionID === quiz.id) {
-  //       quiz.options.map(option => {
-  //         if (option.isHeld) {
-  //           setAnswerIndex(pre => pre + 1)
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-  // console.log(answerIndex)
 
   function chooseOption(quizId, optionId) {
+
     setAllQuiz(prevAllQuiz => prevAllQuiz.map(quiz => {
       if (quiz.id === quizId) {
         const optionList = quiz.options.map(option => {
@@ -110,6 +99,19 @@ function App() {
         return quiz
       }
     }))
+
+    allQuiz.map(quiz => {
+      if (quizId === quiz.id) {
+        quiz.options.map(option => {
+          if (option.isHeld) {
+            setAnswerIndex(pre => pre - 1)
+          }
+          else if (!option.isHeld && option.id === optionId) {
+            setAnswerIndex(pre => pre + 1)
+          }
+        })
+      }
+    })
   }
 
   function checkAnswers() {
@@ -180,15 +182,19 @@ function App() {
                 <button onClick={formFunction} className="text-sm text-clr-white bg-clr-blue-btn font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg">Back</button>
                 {quizElements}
                 {
-                  !isAllSelect ?
-                    <div className="flex items-center justify-center ">
-                      <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Check Answers</button>
-                    </div>
+                  answerIndex != allQuiz.length ?
+                    <p className="text-md py-2 text-center font-karla text-clr-blue-text md:text-xl lg:text-2xl">Select the remaining {allQuiz.length - answerIndex}{" "}
+                      questions</p>
                     :
-                    <div className="text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
-                      <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score}/{allQuiz.length} correct {score > 1 ? 'answers' : 'answer'}.</p>
-                      <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again</button>
-                    </div>
+                    !isAllSelect ?
+                      <div className="flex items-center justify-center ">
+                        <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Check Answers</button>
+                      </div>
+                      :
+                      <div className="text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
+                        <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score}/{allQuiz.length} correct {score > 1 ? 'answers' : 'answer'}.</p>
+                        <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again</button>
+                      </div>
                 }
               </div>
       }
