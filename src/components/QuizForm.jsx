@@ -24,7 +24,7 @@ export default function QuizForm(props) {
 
 
     return (
-        <div className="relative flex h-screen items-center justify-center flex-col px-5 md:max-w-xl mx-auto">
+        <div className="animate-fade-in relative flex h-screen items-center justify-center flex-col px-5 md:max-w-xl mx-auto">
             <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold font-karla text-clr-blue-text">Create a Quiz</h1>
             <p className="text-sm md:text-base lg:text-xl text-center mt-3 mb-5 text-clr-blue-text font-medium font-inter">Choose the difficulty level, numbers of questions and category of questions you would like the quiz to be created.</p>
             <form className="space-y-5 mt-3 px-3">

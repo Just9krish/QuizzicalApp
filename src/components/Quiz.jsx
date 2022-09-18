@@ -44,7 +44,7 @@ export default function Quiz(props) {
     })
 
     return (
-        <div className="text-clr-blue-text space-y-5 z-10">
+        <div className="animate-fade-in text-clr-blue-text space-y-5 z-10">
             <p className="text-md font-karla font-bold md:text-xl lg:text-2xl">{decode(props.question)}</p>
             <div className="flex flex-wrap gap-4 lg:gap-8">
                 {optionElements}

@@ -17,6 +17,19 @@ module.exports = {
         "clr-right-answer": "#94D7A2",
         "clr-wrong-answer": "#F8BCBC"
       },
+      keyframes: {
+        fadeInAnimation: {
+          "0%": {
+            opacity: "0"
+          },
+          "100%": {
+            opacity: "1"
+          }
+        }
+      },
+      animation: {
+        "fade-in": "fadeInAnimation ease 2s 1 forwards"
+      }
     },
   },
   variants: {
