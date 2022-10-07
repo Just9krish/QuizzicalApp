@@ -12,9 +12,9 @@ export default function Quiz(props) {
         } else if (option.isNotSelectedCorrect) {
             background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer'
         } else if (option.isNotSelectedIncorrect) {
-            background = `cursor-not-allowed disabled:bg-white opacity-80`
+            background = `cursor-not-allowed disabled:bg-white opacity-80 dark:disabled:bg-[#04293A]`
         } else {
-            background = option.isHeld ? 'border-clr-choose bg-clr-choose' : 'border-clr-blue-btn'
+            background = option.isHeld ? 'border-clr-choose bg-clr-choose dark:border-[#04293A] dark:bg-[#04293A]' : 'border-clr-blue-btn'
         }
 
         return <button className={`
@@ -31,6 +31,8 @@ export default function Quiz(props) {
         transition-colors
         hover:bg-clr-choose
         hover:border-clr-choose
+        dark:hover:bg-[#04293A]
+        dark:hover:border-[#04293A]
         focus:outline-none
         focus:bg-clr-choose
         focus:border-clr-choose 
@@ -50,7 +52,7 @@ export default function Quiz(props) {
             <div className="flex flex-wrap gap-4 lg:gap-8">
                 {optionElements}
             </div>
-            <hr className="bg-clr-white"></hr>
+            <hr className="bg-clr-white dark:bg-dark-head"></hr>
         </div>
     )
 }
