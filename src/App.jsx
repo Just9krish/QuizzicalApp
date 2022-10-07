@@ -1,11 +1,15 @@
+// Modules
 import { useState, useEffect } from 'react'
 import { nanoid } from 'nanoid'
+
+// Components
 import Start from './components/Start'
 import Quiz from './components/Quiz'
 import QuizForm from './components/QuizForm'
 import Spinner from './components/Spinner'
 import yellowBlob from './assets/yellow-blob.svg'
 import blueBlob from './assets/blue-blob.svg'
+import Switcher from './components/Switcher'
 
 
 function App() {
@@ -18,6 +22,7 @@ function App() {
   const [isAllSelect, setIsAllSelect] = useState(false)
   const [score, setScore] = useState(0)
   const [answerIndex, setAnswerIndex] = useState(0)
+  const [isDarkMode, setISDarkMode] = useState(false)
 
 
   function startGame() {
@@ -164,12 +169,20 @@ function App() {
     />
   ))
 
+  function toggleDark() {
+    setISDarkMode(prev => !prev)
+  }
+
 
   return (
-    <main className='relative overflow-hidden '>
+    <main className={`relative overflow-hidden ${isDarkMode && 'dark'}`}>
 
-      <img src={yellowBlob} className="absolute top-0 right-0 -rotate-12 translate-x-1/2 -translate-y-1/3 scale-125 pointer-events-none sm:scale-90" />
-      <img src={blueBlob} className="absolute bottom-0 left-0 -translate-x-1/3 translate-y-1/2 scale-125 pointer-events-none sm:scale-90" />
+      <img src={yellowBlob} className="absolute top-0 right-0 -rotate-12 translate-x-1/2 -translate-y-1/3 scale-125 pointer-events-none sm:scale-90 dark:hidden" />
+      <img src={blueBlob} className="absolute bottom-0 left-0 -translate-x-1/3 translate-y-1/2 scale-125 pointer-events-none sm:scale-90 dark:hidden" />
+
+      <div className="absolute left-[80%] right-0 z-50">
+        <Switcher toggleDark={toggleDark} isDarkMode={isDarkMode} />
+      </div>
 
       {
         !isStart ?
@@ -179,24 +192,26 @@ function App() {
           !isFormFilled ?
             <QuizForm formFunction={formFunction} startGame={startGame} /> :
             isLoading ? <Spinner /> :
-              <div className="space-y-5 max-w-5xl mx-auto my-11 p-5 relative z-10">
-                <button onClick={formFunction} className="text-sm text-clr-white bg-clr-blue-btn font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg">Back</button>
-                {quizElements}
-                {
-                  answerIndex != allQuiz.length ?
-                    <p className="text-md py-2 text-center font-karla text-clr-blue-text md:text-xl lg:text-2xl">Select the remaining {allQuiz.length - answerIndex}{" "}
-                      questions</p>
-                    :
-                    !isAllSelect ?
-                      <div className="transition-all flex items-center justify-center ">
-                        <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Check Answers</button>
-                      </div>
+              <div className="dark:bg-dark-bg transition duration-500">
+                <div className="space-y-5 max-w-5xl mx-auto my-11 p-5 relative z-10">
+                  <button onClick={formFunction} className="text-sm text-clr-white bg-clr-blue-btn font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg">Back</button>
+                  {quizElements}
+                  {
+                    answerIndex != allQuiz.length ?
+                      <p className="text-md py-2 text-center font-karla text-clr-blue-text md:text-xl lg:text-2xl">Select the remaining {allQuiz.length - answerIndex}{" "}
+                        questions</p>
                       :
-                      <div className="transition-all text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
-                        <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl">You scored {score}/{allQuiz.length} correct {score > 1 ? 'answers' : 'answer'}.</p>
-                        <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg">Play again</button>
-                      </div>
-                }
+                      !isAllSelect ?
+                        <div className="transition-all flex items-center justify-center ">
+                          <button onClick={checkAnswers} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg dark:bg-dark-head dark:text-dark-para">Check Answers</button>
+                        </div>
+                        :
+                        <div className="transition-all text-center space-y-3 md:space-y-0 md:flex md:items-center md:justify-center">
+                          <p className="text-clr-blue-text text-md mr-8 font-inter font-bold md:text-xl lg:text-2xl dark:text-dark-para">You scored {score}/{allQuiz.length} correct {score > 1 ? 'answers' : 'answer'}.</p>
+                          <button onClick={newGame} className="bg-clr-blue-btn text-clr-white px-6 py-2 rounded-md shadow-xl transition-all font-semibold font-inter hover:opacity-80 focus:opacity-80 active:scale-90 md:text-xl md:px-12 md:py-4 md:rounded-lg dark:bg-dark-head dark:text-dark-para">Play again</button>
+                        </div>
+                  }
+                </div>
               </div>
       }
     </main>

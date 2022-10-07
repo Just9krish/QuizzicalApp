@@ -33,7 +33,8 @@ export default function Quiz(props) {
         hover:border-clr-choose
         focus:outline-none
         focus:bg-clr-choose
-        focus:border-clr-choose
+        focus:border-clr-choose 
+        dark:text-dark-para
         ${background}
         `}
             key={option.id}
@@ -44,8 +45,8 @@ export default function Quiz(props) {
     })
 
     return (
-        <div className="animate-fade-in text-clr-blue-text space-y-5 z-10">
-            <p className="text-md font-karla font-bold md:text-xl lg:text-2xl">{decode(props.question)}</p>
+        <div className="animate-fade-in text-clr-blue-text space-y-5 z-10 ">
+            <p className="text-md font-karla font-bold md:text-xl lg:text-2xl dark:text-dark-para">{decode(props.question)}</p>
             <div className="flex flex-wrap gap-4 lg:gap-8">
                 {optionElements}
             </div>
@@ -53,15 +54,3 @@ export default function Quiz(props) {
         </div>
     )
 }
-
-// function selectAllOptions(questionId) {
-  //   data.map(allElements => {
-  //     if (questionId === allElements.id) {
-  //       allElements.options.map(option => {
-  //         if (option.isHeld) {
-  //           setCount(pre => pre + 1)
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
