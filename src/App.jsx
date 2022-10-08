@@ -168,6 +168,7 @@ function App() {
     />
   ))
 
+
   function toggleDark() {
     setISDarkMode(prev => !prev)
   }
@@ -191,7 +192,7 @@ function App() {
           !isFormFilled ?
             <QuizForm formFunction={formFunction} startGame={startGame} /> :
             isLoading ? <Spinner /> :
-              <div className="dark:bg-dark-bg transition duration-500">
+              <div className="py-4 dark:bg-dark-bg transition duration-500">
                 <div className="space-y-5 max-w-5xl mx-auto p-5 relative z-10">
                   <button onClick={formFunction} className="text-sm text-clr-white bg-clr-blue-btn font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg">Back</button>
                   {quizElements}

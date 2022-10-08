@@ -6,15 +6,15 @@ export default function Quiz(props) {
 
         let background = ""
         if (option.isHeldCorrect) {
-            background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer'
+            background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer disabled:dark:bg-dark-green disabled:dark:border-dark-green'
         } else if (option.isHeldIncorrect) {
-            background = 'disabled:border-clr-wrong-answer disabled:bg-clr-wrong-answer opacity-80 cursor-not-allowed'
+            background = 'disabled:border-clr-wrong-answer disabled:bg-clr-wrong-answer opacity-80 cursor-not-allowed disabled:dark:bg-dark-red disabled:border-dark-red'
         } else if (option.isNotSelectedCorrect) {
-            background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer'
+            background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer disabled:dark:bg-dark-green disabled:border-dark-green'
         } else if (option.isNotSelectedIncorrect) {
-            background = `cursor-not-allowed disabled:bg-white opacity-80 dark:disabled:bg-[#04293A]`
+            background = `cursor-not-allowed disabled:bg-white opacity-80 dark:disabled:bg-dark-hover disabled:dark:bg-dark-hover`
         } else {
-            background = option.isHeld ? 'border-clr-choose bg-clr-choose dark:border-[#04293A] dark:bg-[#04293A]' : 'border-clr-blue-btn'
+            background = option.isHeld ? 'border-clr-choose bg-clr-choose dark:border-dark-hover dark:bg-dark-hover dark:text-dark-para' : 'border-clr-blue-btn hover:bg-clr-choose hover:border-clr-choose focus:bg-clr-choose focus:border-clr-choose dark:text-dark-para dark:hover:bg-dark-hover dark:hover:border-dark-hover dark:focus:bg-dark-hover dark:focus:border-dark-hover'
         }
 
         return <button className={`
@@ -29,16 +29,10 @@ export default function Quiz(props) {
         lg:px-9
         lg:rounded-xl
         transition-colors
-        hover:bg-clr-choose
-        hover:border-clr-choose
-        dark:hover:bg-[#04293A]
-        dark:hover:border-[#04293A]
         focus:outline-none
-        focus:bg-clr-choose
-        focus:border-clr-choose 
         dark:text-dark-para
         ${background}
-        `}
+        `} 
             key={option.id}
             onClick={() => props.chooseOption(props.id, option.id)}
             disabled={props.disable}

@@ -19,7 +19,10 @@ module.exports = {
         "clr-wrong-answer": "#F8BCBC",
         "dark-para": "#EEEEEE",
         "dark-head": "#ECB365",
-        "dark-bg": "#041C32"
+        "dark-bg": "#041C32",
+        "dark-hover": "#04293A",
+        "dark-green": "#4E9F3D",
+        "dark-red": "#FF1E56"
       },
       keyframes: {
         fadeInAnimation: {
@@ -38,8 +41,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ['disabled'],
-      textColor: ['disabled'],
+      backgroundColor: ['responsive', 'hover', 'focus', 'active','disabled'],
+      textColor: ['responsive', 'hover', 'focus', 'active','disabled'],
     },
   },
   plugins: [],
