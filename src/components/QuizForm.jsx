@@ -96,7 +96,7 @@ export default function QuizForm(props) {
                     </div>
                 </form>
                 <div className="mt-7 px-2 flex justify-between w-full md:px-5">
-                    <button onClick={props.startGame} className="text-sm text-clr-blue-text bg-clr-white font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg ">Back</button>
+                    <button onClick={props.startGame} className="text-sm text-clr-blue-text bg-clr-white font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg dark:text-clr-white dark:bg-clr-blue-btn">Back</button>
                     <button onClick={() => props.formFunction(BASE_URL)} className="text-sm text-clr-white bg-clr-blue-btn font-inter py-1 px-2 md:text-lg lg:text-lg lg:px-8 rounded-md shadow-xl transition-all hover:opacity-80 active:scale-90 focus:opacity-80 md:rounded-lg dark:bg-dark-head dark:text-dark-para">Let's do this</button>
                 </div>
             </div >

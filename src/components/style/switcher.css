@@ -15,7 +15,7 @@
 .theme-toggle {
   cursor: pointer;
   margin: 0 auto;
-  font-size: 15%;
+  font-size: 1.85px;
   margin-top: 10em;
   position: relative;
   height: var(--toggleHeight);
@@ -59,4 +59,15 @@
     3.5em -3.5em 0 -3em #fff, 5em 0 0 -2.7em #fff, 3.5em 3.5em 0 -3em #fff,
     0 5em 0 -2.7em #fff, -3.5em 3.5em 0 -3em #fff, -5em 0 0 -2.7em #fff,
     -3.5em -3.5em 0 -3em #fff;
+}
+
+@media (min-width: 768px) {
+  .theme-toggle {
+    font-size: 2.1px;
+  }
+}
+@media (min-width: 1024px) {
+  .theme-toggle {
+    font-size: 2.4px;
+  }
 }
