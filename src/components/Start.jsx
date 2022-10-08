@@ -1,6 +1,6 @@
 export default function Start(props) {
     return (
-        <div className="animate-fade-in flex justify-center items-center h-screen flex-col gap-4 p-5 text-center dark:bg-dark-bg transition duration-500">
+        <div className="animate-fade-in flex justify-center items-center h-screen flex-col gap-4 p-5 text-center bg-transparent dark:bg-dark-bg transition duration-500">
             <h1 className="text-clr-blue-text font-bold text-3xl font-karla md:text-6xl dark:text-dark-head transition duration-500">Quizzical</h1>
             <p className="text-clr-blue-text font-inter md:text-xl dark:text-dark-para transition duration-500">Click on the start button to test your knowledge!</p>
             <button
