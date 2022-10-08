@@ -177,8 +177,8 @@ function App() {
   return (
     <main className={`relative overflow-hidden ${isDarkMode && 'dark'}`}>
 
-      <img src={yellowBlob} className="absolute top-0 right-0 -rotate-12 translate-x-1/2 -translate-y-1/3 scale-125 pointer-events-none sm:scale-90 dark:hidden" />
-      <img src={blueBlob} className="absolute bottom-0 left-0 -translate-x-1/3 translate-y-1/2 scale-125 pointer-events-none sm:scale-90 dark:hidden" />
+      <img src={yellowBlob} className="absolute top-0 right-0 -rotate-12 translate-x-1/2 -translate-y-1/3 scale-125 pointer-events-none sm:scale-90 dark:hidden transition duration-500" />
+      <img src={blueBlob} className="absolute bottom-0 left-0 -translate-x-1/3 translate-y-1/2 scale-125 pointer-events-none sm:scale-90 dark:hidden transition duration-500" />
 
       <div className="absolute left-[80%] right-0 z-50">
         <Switcher toggleDark={toggleDark} isDarkMode={isDarkMode} />
