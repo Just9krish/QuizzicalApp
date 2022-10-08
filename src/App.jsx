@@ -175,7 +175,7 @@ function App() {
 
 
   return (
-    <main className={`relative overflow-hidden ${isDarkMode && 'dark'}`}>
+    <main className={`relative overflow-hidden bg-white ${isDarkMode && 'dark'}`}>
 
       <img src={yellowBlob} className="absolute top-0 right-0 -rotate-12 translate-x-1/2 -translate-y-1/3 scale-125 pointer-events-none sm:scale-90 dark:hidden transition duration-500" />
       <img src={blueBlob} className="absolute bottom-0 left-0 -translate-x-1/3 translate-y-1/2 scale-125 pointer-events-none sm:scale-90 dark:hidden transition duration-500" />
