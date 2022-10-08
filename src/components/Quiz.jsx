@@ -8,9 +8,9 @@ export default function Quiz(props) {
         if (option.isHeldCorrect) {
             background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer disabled:dark:bg-dark-green disabled:dark:border-dark-green'
         } else if (option.isHeldIncorrect) {
-            background = 'disabled:border-clr-wrong-answer disabled:bg-clr-wrong-answer opacity-80 cursor-not-allowed disabled:dark:bg-dark-red disabled:border-dark-red'
+            background = 'disabled:border-clr-wrong-answer disabled:bg-clr-wrong-answer opacity-80 cursor-not-allowed disabled:dark:bg-dark-red disabled:dark:border-dark-red'
         } else if (option.isNotSelectedCorrect) {
-            background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer disabled:dark:bg-dark-green disabled:border-dark-green'
+            background = 'disabled:border-clr-right-answer disabled:bg-clr-right-answer disabled:dark:bg-dark-green disabled:dark:border-dark-green'
         } else if (option.isNotSelectedIncorrect) {
             background = `cursor-not-allowed disabled:bg-white opacity-80 dark:disabled:bg-dark-hover disabled:dark:bg-dark-hover`
         } else {
