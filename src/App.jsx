@@ -44,16 +44,15 @@ function App() {
   }
 
   useEffect(() => {
-    const getItems = async () => {
+    async function getItems() {
       setIsLoading(true)
-      await fetch(BASE_URL)
-        .then(response =>
-          response.json())
-        .then(data => setAllQuiz(newQuiz(data.results)))
+      const response = await fetch(BASE_URL)
+      const data = await response.json()
       setIsLoading(false)
+      return data
     }
 
-    getItems()
+    getItems().then(data => setAllQuiz(newQuiz(data.results)))
   }, [isPlayAgain, isFormFilled])
 
   function newQuiz(listOfQuizs) {
