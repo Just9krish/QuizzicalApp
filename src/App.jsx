@@ -1,5 +1,5 @@
 // Modules
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { nanoid } from 'nanoid'
 
 // Components
@@ -23,6 +23,7 @@ function App() {
   const [score, setScore] = useState(0)
   const [answerIndex, setAnswerIndex] = useState(0)
   const [isDarkMode, setISDarkMode] = useState(false)
+  const a = useRef(false)
 
 
   function startGame() {
@@ -43,16 +44,21 @@ function App() {
     setAnswerIndex(0)
   }
 
-  useEffect(() => {
-    async function getQuizData() {
-      setIsLoading(true)
-      const response = await fetch(BASE_URL)
-      const data = await response.json()
-      setIsLoading(false)
-      return data
-    }
 
-    getQuizData().then(data => setAllQuiz(newQuiz(data.results)))
+  useEffect(() => {
+    if (a.current) {
+      async function getQuizData() {
+        setIsLoading(true)
+        const response = await fetch(BASE_URL)
+        const data = await response.json()
+        setIsLoading(false)
+        return data
+      }
+
+      getQuizData().then(data => setAllQuiz(newQuiz(data.results)))
+    } else {
+      a.current = true;
+    }
   }, [isPlayAgain, isFormFilled])
 
   function newQuiz(listOfQuizs) {
